@@ -1,0 +1,16 @@
+PREMIERE FOIS : 
+
+git init
+git add .
+git commit -m "Premier commit"
+git remote add origin <url_du_repo>
+git push -u origin master (ou main)
+
+PUSH : 
+git add .                            # ajoute tous les changements
+git commit -m "Message clair"       # enregistre les changements localement
+git push                            # envoie sur GitHub (remote)
+
+PULL : 
+git pull                            # récupère les changements distants
+# (résout les conflits si besoin)
