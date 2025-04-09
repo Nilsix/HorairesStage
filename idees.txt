@@ -1,3 +1,4 @@
 A ajouter : 
 base de données contenant les heures de debut pause fin chaque jour 
 meilleur interface frontend (bootstrap)
+ajouter un tri par signature ou non
