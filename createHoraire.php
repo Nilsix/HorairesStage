@@ -15,6 +15,7 @@
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        
         $heureDebut = $_POST["heureDebut"];
         $heureDebut = new DateTime($heureDebut);
         $heureDebutPause = $_POST["heureDebutPause"] ?? "";
@@ -48,12 +49,14 @@
                 $heureFin = new DateTime($heureDebut);
                 $heureFin->add(new DateInterval("PT7H"));
                 $heureFin->add($tempsPause);
-                $tempsPause = $tempsPause->format('H:i');
+                $tempsPauseDT = new DateTime("00:00");
+                $tempsPauseDT->add($tempsPause);
+                $tempsPauseDT = $tempsPauseDT->format('H:i');
                 $heureFin = $heureFin->format('H:i');
             }
             
             
-            $sql = "INSERT INTO horaire (dateHoraire,heureDebut, heureDebutPause, heureFinPause, tempsPause, heureFin, signature) VALUES ('$dateHoraire' , '$heureDebut' , '$heureDebutPause', '$heureFinPause', '$tempsPause', '$heureFin', '$signature')";
+            $sql = "INSERT INTO horaire (dateHoraire,heureDebut, heureDebutPause, heureFinPause, tempsPause, heureFin, signature) VALUES ('$dateHoraire' , '$heureDebut' , '$heureDebutPause', '$heureFinPause', '$tempsPauseDT', '$heureFin', '$signature')";
             $result = $conn->query($sql);
             $_SESSION['SUCCESS'] = "Horaire ajouté avec succès";
             exportDatabase();

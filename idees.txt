@@ -1,4 +1,5 @@
 A ajouter : 
-base de données contenant les heures de debut pause fin chaque jour 
-meilleur interface frontend (bootstrap)
-ajouter un tri par signature ou non
+base de données contenant les heures de debut pause fin chaque jour : check 
+meilleur interface frontend (bootstrap) : check
+ajouter un tri par signature ou non : check
+faire la page de modification : 

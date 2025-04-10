@@ -33,7 +33,7 @@ CREATE TABLE `horaire` (
   `signature` tinyint(1) NOT NULL,
   PRIMARY KEY (`idHoraire`),
   UNIQUE KEY `dateHoraire` (`dateHoraire`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `horaire` (
 
 LOCK TABLES `horaire` WRITE;
 /*!40000 ALTER TABLE `horaire` DISABLE KEYS */;
-INSERT INTO `horaire` VALUES (20,'2025-04-09','09:00:00','12:30:00','14:00:00','00:00:00','17:30:00',0);
+INSERT INTO `horaire` VALUES (20,'2025-04-09','09:00:00','12:30:00','14:00:00','00:00:00','17:30:00',0),(21,'2025-04-10','08:15:00','00:00:00','00:00:00','00:00:00','00:00:00',0),(22,'2025-04-08','09:00:00','13:30:00','14:20:00','00:00:00','16:50:00',0),(23,'2025-04-22','12:00:00','14:00:00','15:00:00','01:00:00','20:00:00',0);
 /*!40000 ALTER TABLE `horaire` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-09 17:20:57
+-- Dump completed on 2025-04-10  8:57:16

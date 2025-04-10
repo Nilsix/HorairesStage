@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+$_SESSION["editSwitch"] = false;
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +55,7 @@ session_start();
                         $sql = "SELECT * FROM horaire WHERE signature = 0 ORDER BY dateHoraire DESC";
                     }
                 }
+                
                 $result = $conn->query($sql);
                 while($row = $result->fetch_assoc()){
                     $heureDebut = new DateTime($row['heureDebut']);
@@ -60,6 +63,7 @@ session_start();
                     $heureFinPause = new DateTime($row['heureFinPause']);
                     $tempsPause = new DateTime($row['tempsPause']);
                     $heureFin = new DateTime($row['heureFin']);
+                    $dateHoraire = new DateTime($row['dateHoraire']);
                     
                     // Vérifier si l'heure est 00:00
                     if($heureDebutPause->format('H:i') == '00:00'){
@@ -77,7 +81,7 @@ session_start();
                     
                     echo "
                         <tr>
-                            <td>".$row['dateHoraire']."</td>
+                            <td>".$dateHoraire->format('d/m/Y')."</td>
                     <td>".$heureDebut->format('H:i')."</td>";
                     if(!empty($heureDebutPause)){
                         echo "<td>".$heureDebutPause->format('H:i')."</td>";
