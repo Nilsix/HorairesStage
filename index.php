@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-$_SESSION["editSwitch"] = false;
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +38,6 @@ $_SESSION["editSwitch"] = false;
         <tbody>
             <?php
                 include 'config.php';
-                
                 // Créer la base de données si elle n'existe pas
                 $sql = "CREATE DATABASE IF NOT EXISTS horairesstage";
                 if($conn->query($sql) === TRUE){
@@ -64,7 +61,6 @@ $_SESSION["editSwitch"] = false;
                     $tempsPause = new DateTime($row['tempsPause']);
                     $heureFin = new DateTime($row['heureFin']);
                     $dateHoraire = new DateTime($row['dateHoraire']);
-                    
                     // Vérifier si l'heure est 00:00
                     if($heureDebutPause->format('H:i') == '00:00'){
                         $heureDebutPause = "";
@@ -78,7 +74,6 @@ $_SESSION["editSwitch"] = false;
                     if($heureFin->format('H:i') == '00:00'){
                         $heureFin = "";
                     }
-                    
                     echo "
                         <tr>
                             <td>".$dateHoraire->format('d/m/Y')."</td>
@@ -116,7 +111,7 @@ $_SESSION["editSwitch"] = false;
                     echo "
                     
                     <td>
-                        <form action='editHoraire.php' method='post' class='d-inline'>
+                        <form action='editHoraire.php' method='get' class='d-inline'>
                         <input type='hidden' name='idHoraire' value='".$row['idHoraire']."'>
                         <input type='submit' class='btn btn-primary' value='Modifier'>
                         </form>
