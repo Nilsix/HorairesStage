@@ -2,4 +2,6 @@ A ajouter :
 base de données contenant les heures de debut pause fin chaque jour : check 
 meilleur interface frontend (bootstrap) : check
 ajouter un tri par signature ou non : check
-faire la page de modification : 
+faire la page de modification : check
+protection injection SQL : no check
+export csv : no check

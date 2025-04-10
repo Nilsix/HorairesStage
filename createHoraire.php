@@ -61,8 +61,9 @@
                 $tempsPauseDT = $tempsPauseDT->format('H:i');
                 $heureFin = $heureFin->format('H:i');
             }
-            $sql = "INSERT INTO horaire (dateHoraire,heureDebut, heureDebutPause, heureFinPause, tempsPause, heureFin, signature) VALUES ('$dateHoraire' , '$heureDebut' , '$heureDebutPause', '$heureFinPause', '$tempsPauseDT', '$heureFin', '$signature')";
-            $result = $conn->query($sql);
+            $request = $conn->prepare("INSERT INTO horaire (dateHoraire,heureDebut, heureDebutPause, heureFinPause, tempsPause, heureFin, signature) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $request->bind_param("ssssssi", $dateHoraire, $heureDebut, $heureDebutPause, $heureFinPause, $tempsPauseDT, $heureFin, $signature);
+            $request->execute();
             $_SESSION['SUCCESS'] = "Horaire ajouté avec succès";
             exportDatabase();
             header("Location: index.php");
