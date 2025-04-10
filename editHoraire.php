@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container my-5">
-        <h2>Creer Horaire</h2>
+        <h2>Modifier Horaire</h2>
         <?php 
         if($_SERVER["REQUEST_METHOD"] == "GET"){
             if(isset($_GET['idHoraire'])){
@@ -28,11 +28,36 @@
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             $dateHoraire = new DateTime($row['dateHoraire']);
+            $dateHoraireOriginal = new DateTime($row['dateHoraire']);
             $heureDebut = new DateTime($row['heureDebut']);
             $heureDebutPause = new DateTime($row['heureDebutPause']);
             $heureFinPause = new DateTime($row['heureFinPause']);
             $tempsPause = new DateTime($row['tempsPause']);
             $heureFin = new DateTime($row['heureFin']);
+            if($heureDebutPause->format('H:i') == '00:00'){
+                $heureDebutPause = "";
+            }
+            else{
+                $heureDebutPause = $heureDebutPause->format('H:i');
+            }
+            if($heureFinPause->format('H:i') == '00:00'){
+                $heureFinPause = "";
+            }
+            else{
+                $heureFinPause = $heureFinPause->format('H:i');
+            }
+            if($tempsPause->format('H:i') == '00:00'){
+                $tempsPause = "";
+            }
+            else{
+                $tempsPause = $tempsPause->format('H:i');
+            }
+            if($heureFin->format('H:i') == '00:00'){
+                $heureFin = "";
+            }
+            else{
+                $heureFin = $heureFin->format('H:i');
+            }
             if(isset($_SESSION['ERROR'])) {
                 foreach($_SESSION['ERROR'] as $error) {
                     echo "<div class='alert alert-warning' role='alert'> <strong>$error </strong></div>";
@@ -46,6 +71,7 @@
             }
             echo "
             <form action='postEditHoraire.php' method='post'>
+                <input type='hidden' name='dateHoraireOriginal' value='" . $dateHoraireOriginal->format('Y-m-d') . "'>
                 <input type='hidden' name='idHoraire' value='$idHoraire'>
                 <div class='row mb-3'>
                     <label class='col-sm-3 col-form-label' for='date'>Date</label>
@@ -63,14 +89,14 @@
                 <div class='row mb-3'>
                     <label class='col-sm-3 col-form-label' for='heureDebutPause'>Début pause</label>
                     <div class='col sm-6'>
-                        <input type='time' name='heureDebutPause' id='heureDebutPause' value='" . $heureDebutPause->format('H:i') . "'>
+                        <input type='time' name='heureDebutPause' id='heureDebutPause' value='" . $heureDebutPause. "'>
                     </div>
                 </div>
 
                 <div class='row mb-3'>
                     <label class='col-sm-3 col-form-label' for='heureFinPause'>Fin pause</label>
                     <div class='col sm-6'>
-                        <input type='time' name='heureFinPause' id='heureFinPause' value='" . $heureFinPause->format('H:i') . "'>
+                        <input type='time' name='heureFinPause' id='heureFinPause' value='" . $heureFinPause. "'>
                     </div>
                 </div>
 

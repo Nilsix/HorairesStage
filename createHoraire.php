@@ -15,19 +15,23 @@
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        
         $heureDebut = $_POST["heureDebut"];
         $heureDebut = new DateTime($heureDebut);
         $heureDebutPause = $_POST["heureDebutPause"] ?? "";
         $heureFinPause = $_POST["heureFinPause"] ?? "";
         $dateHoraire = $_POST["dateHoraire"];
-        // gestion erreurs
-        if(!empty($heureDebutPause) && !empty($heureFinPause)){
+        if(empty($heureFinPause) && !empty($heureDebutPause)){
+            $heureDebutPause = new DateTime($heureDebutPause);
+        }
+        else if(!empty($heureDebutPause) && !empty($heureFinPause)){
             $heureDebutPause = new DateTime($heureDebutPause);
             $heureFinPause = new DateTime($heureFinPause);
             if ($heureFinPause <= $heureDebutPause) {
                 $errors[] = "La fin de la pause doit être après le début de la pause";
             }
+        }
+        if(empty($heureDebutPause) && !empty($heureFinPause)){
+            $errors[] = "La fin de la pause ne peut être rempli sans le début de pause";
         }
         if(!empty($heureDebutPause) && $heureDebutPause <= $heureDebut){
             $errors[] = "Le début de la pause doit être après l'heure du début";
@@ -44,6 +48,9 @@
                 $heureDebutPause = $heureDebutPause->format('H:i');
                 $heureFinPause = $heureFinPause->format('H:i');
             }
+            else if(!empty($heureDebutPause)){
+                $heureDebutPause = $heureDebutPause->format('H:i');
+            }
             $heureDebut = $heureDebut->format('H:i');
             if(!empty($tempsPause)){
                 $heureFin = new DateTime($heureDebut);
@@ -54,8 +61,6 @@
                 $tempsPauseDT = $tempsPauseDT->format('H:i');
                 $heureFin = $heureFin->format('H:i');
             }
-            
-            
             $sql = "INSERT INTO horaire (dateHoraire,heureDebut, heureDebutPause, heureFinPause, tempsPause, heureFin, signature) VALUES ('$dateHoraire' , '$heureDebut' , '$heureDebutPause', '$heureFinPause', '$tempsPauseDT', '$heureFin', '$signature')";
             $result = $conn->query($sql);
             $_SESSION['SUCCESS'] = "Horaire ajouté avec succès";

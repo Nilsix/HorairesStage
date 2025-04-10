@@ -6,7 +6,7 @@
         $sql = "SELECT * FROM horaire WHERE idHoraire = $id";
         $row = $conn->query($sql)->fetch_assoc();
         if($row['signature'] == 1){
-            $_SESSION['ERROR'] = "Impossible de signer un horaire signé";
+            $_SESSION['ERROR'] = "Impossible de signer un horaire déjà signé";
             header("Location: index.php");
             exit();
         }

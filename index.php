@@ -104,28 +104,28 @@ session_start();
                     }
                     if($row['signature'] == 1){
                         echo "<td>OUI</td>";
+                        echo " <td></td>";
                     }
                     else{
                         echo "<td>NON</td>";
-                    }
-                    echo "
-                    
+                        echo "
                     <td>
                         <form action='editHoraire.php' method='get' class='d-inline'>
                         <input type='hidden' name='idHoraire' value='".$row['idHoraire']."'>
                         <input type='submit' class='btn btn-primary' value='Modifier'>
                         </form>
-                        <form action='deleteHoraire.php' method='post' class='d-inline'>
+                        <form action='deleteHoraire.php' method='post' class='d-inline delete-form'>
                         <input type='hidden' name='idHoraire' value='".$row['idHoraire']."'>
-                        <input type='submit' class='btn btn-danger' onclick='confirmBox();' value='Supprimer'>
+                        <input type='submit' class='btn btn-danger' value='Supprimer'>
                         </form>
-                        <form action='signHoraire.php' method='post' class='d-inline'>
+                        <form action='signHoraire.php' method='post' class='d-inline sign-form'>
                         <input type='hidden' name='idHoraire' value='".$row['idHoraire']."'>
                         <input type='submit' class='btn btn-success' value='Signer'>
                         </form>
-                    </td>
-                    </tr>
-                    ";
+                    </td>";
+                    }
+                    echo "</tr>";
+                    
                 }
             ?>
             
@@ -136,6 +136,10 @@ session_start();
             echo "<div id='flashAppear' class='alert alert-success' role='alert'> <strong>".$_SESSION["SUCCESS"] ." </strong></div>";
             unset($_SESSION["SUCCESS"]);
         }
+        if(isset($_SESSION["ERROR"])){
+            echo "<div id='flashAppear' class='alert alert-danger' role='alert'> <strong>".$_SESSION["ERROR"] ." </strong></div>";
+            unset($_SESSION["ERROR"]);
+        }
     ?>
     <script>
         setTimeout(() =>{
@@ -145,19 +149,20 @@ session_start();
                 flash.style.opacity = 0;
                 setTimeout(()=> flash.remove(),500);
             }
-        }, 2000);
-
-        function confirmBox(event){
-         var result = confirm("Es-tu sûre de vouloir supprimer cet horaire?");
-         if(result == false){
-            event.preventDefault();
-         }   
-        }
-        function confirmSign(event){
-            var result = confirm("Es-tu sûre de vouloir signer? Ceci est une action irreversible qui t'empechera de modifier ou de supprimer un horaire");
-            if(result == false){
-                event.preventDefault();
-            }
-        }
+        }, 3000);
+        document.querySelectorAll('.delete-form').forEach(form=> {
+            form.addEventListener('submit',function(e){
+                if(!confirm("Es-tu sûre de vouloir supprimer cet horaire?")){
+                    e.preventDefault();
+                }
+            });
+        });
+        document.querySelectorAll('.sign-form').forEach(form=> {
+            form.addEventListener('submit',function(e){
+                if(!confirm("Es-tu sûre de vouloir signer? Ceci est une action irreversible qui t'empechera de modifier ou de supprimer un horaire")){
+                    e.preventDefault();
+                }
+            });
+        });
     </script>
 </div> 

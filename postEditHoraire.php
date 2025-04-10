@@ -4,13 +4,18 @@ include 'config.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array();
     $_SESSION['idHoraire'] = $_POST['idHoraire'];
-    $heureDebut = $_POST["heureDebut"];
-    $heureDebut = new DateTime($heureDebut);
+    $idHoraire = $_POST['idHoraire'];
+    $heureDebut = new DateTime($_POST["heureDebut"]);
     $heureDebutPause = $_POST["heureDebutPause"] ?? "";
     $heureFinPause = $_POST["heureFinPause"] ?? "";
     $dateHoraire = $_POST["dateHoraire"];
+    
+    $tempsPauseDT = "";
     // gestion erreurs
-    if(!empty($heureDebutPause) && !empty($heureFinPause)){
+    if(empty($heureFinPause) && !empty($heureDebutPause)){
+        $heureDebutPause = new DateTime($heureDebutPause);
+    }
+    else if(!empty($heureDebutPause) && !empty($heureFinPause)){
         $heureDebutPause = new DateTime($heureDebutPause);
         $heureFinPause = new DateTime($heureFinPause);
         if ($heureFinPause <= $heureDebutPause) {
@@ -20,10 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(!empty($heureDebutPause) && $heureDebutPause <= $heureDebut){
         $errors[] = "Le début de la pause doit être après l'heure du début";
     }
-    $duplicateSql = "SELECT * FROM horaire WHERE dateHoraire = '$dateHoraire'";
-    $duplicateResult = $conn->query($duplicateSql);
-    if($duplicateResult->num_rows > 0){
-        $errors[] = "La date est déja utilisée";
+    if(empty($heureDebutPause) && !empty($heureFinPause)){
+        $errors[] = "La fin de la pause ne peut être rempli sans le début de pause";
+    }
+    if($dateHoraire != $_POST['dateHoraire']){
+        $duplicateSql = "SELECT * FROM horaire WHERE dateHoraire = '$dateHoraire'";
+        $duplicateResult = $conn->query($duplicateSql);
+        if($duplicateResult->num_rows > 0){
+            $errors[] = "La date est déja utilisée";
+        }
     }
 
     if (count($errors) <= 0) {
@@ -31,6 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $tempsPause = $heureDebutPause->diff($heureFinPause);
             $heureDebutPause = $heureDebutPause->format('H:i');
             $heureFinPause = $heureFinPause->format('H:i');
+        }
+        else if(!empty($heureDebutPause)){
+            $heureDebutPause = $heureDebutPause->format('H:i');
         }
         $heureDebut = $heureDebut->format('H:i');
         if(!empty($tempsPause)){
@@ -50,6 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     else{
+        /*echo "HEURE DEBUT PAUSE : " . $heureDebutPause . "<br>";
+        echo "HEURE DEBUT : " . $heureDebut . "<br>";*/
         $_SESSION['ERROR'] = $errors;
         header("Location: editHoraire.php");
         exit();
