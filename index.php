@@ -12,6 +12,7 @@ session_start();
 <div class="container my-5">
     <h2> Horaires stage </h2>
     <a class="btn btn-primary" href="createHoraire.php">Créer un horaire</a>
+    <a class="btn btn-primary" href="exportCVS.php">Exporter en CSV</a>
     <form class="d-flex" action="index.php" method="post"> 
         <select name="tri" id="tri">
             <option value="signature">Signés</option>

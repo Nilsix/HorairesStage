@@ -1,8 +1,6 @@
 <?php
     session_start();
     include 'config.php';
-
-
     $heureDebut = "";
     $heureDebutPause = "";
     $heureFinPause = "";
@@ -11,7 +9,7 @@
     $signature = 0;
     $dateHoraire = "";
     $errors = array();
-    
+    $tempsPauseDT = "";
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

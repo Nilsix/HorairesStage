@@ -55,8 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $tempsPauseDT = $tempsPauseDT->format('H:i');
             $heureFin = $heureFin->format('H:i');
         }
-        $sql = "UPDATE horaire SET heureDebut = '$heureDebut', heureDebutPause = '$heureDebutPause', heureFinPause = '$heureFinPause', tempsPause = '$tempsPauseDT', heureFin = '$heureFin' WHERE idHoraire = $idHoraire";
-        $result = $conn->query($sql);
+        $sql = $conn->prepare("UPDATE horaire SET heureDebut = ?, heureDebutPause = ?, heureFinPause = ?, tempsPause = ?, heureFin = ? WHERE idHoraire = ?");
+        $sql->bind_param("sssssi", $heureDebut, $heureDebutPause, $heureFinPause, $tempsPauseDT, $heureFin, $idHoraire);
+        $sql->execute();
         $_SESSION['SUCCESS'] = "Horaire modifié avec succès";
         exportDatabase();
         header("Location: index.php");
