@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION["selectInForm"])){
+    $_SESSION["selectInForm"] = 3;
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +15,12 @@ session_start();
 <div class="container my-5">
     <h2> Horaires stage </h2>
     <a class="btn btn-primary" href="createHoraire.php">Créer un horaire</a>
-    <a class="btn btn-primary" href="exportCVS.php">Exporter en CSV</a>
-    <form class="d-flex" action="index.php" method="post"> 
+    <form class="d-flex" action="index.php" method="post" onchange="this.submit()"> 
         <select name="tri" id="tri">
-            <option value="signature">Signés</option>
-            <option value="non_signature">Non signés</option>
-            <option value="all">Tous</option>
+            <option value="signature"<?php if($_SESSION["selectInForm"] == 1) echo'selected';?>>Signés</option>
+            <option value="non_signature" <?php if($_SESSION["selectInForm"] == 2) echo'selected';?>>Non signés</option>
+            <option value="all" <?php if($_SESSION["selectInForm"] == 3) echo'selected';?> >Tous</option>
         </select>
-        <input class="btn btn-success" type="submit" value="Tri">
     </form>
     <br>
     <br>
@@ -30,8 +31,8 @@ session_start();
                 <th>Heure de début</th>
                 <th>Début de pause</th>
                 <th>Fin de pause</th>
-                <th>Temps de pause</th>
                 <th>Heure de fin</th>
+                <th>Temps de pause</th>
                 <th>Signée </th>
                 <th>Actions</th>
             </tr>
@@ -47,10 +48,16 @@ session_start();
                 $sql = "SELECT * FROM horaire ORDER BY dateHoraire DESC";
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if($_POST["tri"] == "signature"){
+                        $_SESSION["selectInForm"] = 1;
                         $sql = "SELECT * FROM horaire WHERE signature = 1 ORDER BY dateHoraire DESC";
                     }
                     else if($_POST["tri"] == "non_signature"){
+                        $_SESSION["selectInForm"] = 2;
                         $sql = "SELECT * FROM horaire WHERE signature = 0 ORDER BY dateHoraire DESC";
+                    }
+                    else{
+                        $_SESSION["selectInForm"] = 3;
+                        $sql = "SELECT * FROM horaire ORDER BY dateHoraire DESC";
                     }
                 }
                 
@@ -91,14 +98,14 @@ session_start();
                     else{
                         echo "<td></td>";
                     }
-                    if(!empty($tempsPause)){
-                        echo "<td>".$tempsPause->format('H:i')."</td>";
+                    if(!empty($heureFin)){
+                        echo "<td>".$heureFin->format('H:i')."</td>";
                     }
                     else{
                         echo "<td></td>";
                     }
-                    if(!empty($heureFin)){
-                        echo "<td>".$heureFin->format('H:i')."</td>";
+                    if(!empty($tempsPause)){
+                        echo "<td>".$tempsPause->format('H:i')."</td>";
                     }
                     else{
                         echo "<td></td>";
