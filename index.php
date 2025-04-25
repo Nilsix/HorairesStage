@@ -3,6 +3,7 @@ session_start();
 if(!isset($_SESSION["selectInForm"])){
     $_SESSION["selectInForm"] = 3;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -88,8 +89,10 @@ if(!isset($_SESSION["selectInForm"])){
                     <td>".$heureDebut->format('H:i')."</td>";
                     if(!empty($heureDebutPause)){
                         echo "<td>".$heureDebutPause->format('H:i')."</td>";
+                        
                     }
                     else{
+                       
                         echo "<td></td>";
                     }
                     if(!empty($heureFinPause)){
@@ -102,7 +105,11 @@ if(!isset($_SESSION["selectInForm"])){
                         echo "<td>".$heureFin->format('H:i')."</td>";
                     }
                     else{
-                        echo "<td></td>";
+                        $heureFinTempDebut = clone $heureDebut;
+                        $heureFinTempDebut->add(new DateInterval('PT7H30M'));
+                        $heureFinTempFin = clone $heureDebut;
+                        $heureFinTempFin->add(new DateInterval('PT8H'));
+                        echo "<td>".$heureFinTempDebut->format('H:i')." - ".$heureFinTempFin->format('H:i')."</td>";
                     }
                     if(!empty($tempsPause)){
                         echo "<td>".$tempsPause->format('H:i')."</td>";
