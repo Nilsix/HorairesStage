@@ -1,8 +1,16 @@
 <?php
 session_start();
+include 'config.php';
 if(!isset($_SESSION["selectInForm"])){
     $_SESSION["selectInForm"] = 3;
 }
+
+if(!isset($_SESSION["imported"])){
+    importDatabase();
+    $_SESSION["imported"] = true;
+}
+
+
 
 ?>
 
@@ -40,7 +48,7 @@ if(!isset($_SESSION["selectInForm"])){
         </thead>
         <tbody>
             <?php
-                include 'config.php';
+                
                 // Créer la base de données si elle n'existe pas
                 $sql = "CREATE DATABASE IF NOT EXISTS horairesstage";
                 if($conn->query($sql) === TRUE){
