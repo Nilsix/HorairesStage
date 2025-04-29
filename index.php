@@ -10,8 +10,6 @@ if(!isset($_SESSION["imported"])){
     $_SESSION["imported"] = true;
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
