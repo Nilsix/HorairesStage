@@ -33,8 +33,8 @@ if(!isset($_SESSION["imported"])){
     </form>
     <br>
     <br>
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
             <tr>
                 <th>Date</th>
                 <th>Heure de début</th>

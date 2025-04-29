@@ -18,6 +18,5 @@
             function importDatabase(){
                 shell_exec("C:\\xampp\\mysql\\bin\\mysql.exe -u root horairesstage < horairesstage.sql");
                 shell_exec("git pull");
-                echo "<h1> PULL EFFECTUE </h1>";
                 }
 ?>
