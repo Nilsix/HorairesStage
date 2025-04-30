@@ -27,6 +27,10 @@
             $sql = "SELECT * FROM horaire WHERE idHoraire = $idHoraire";
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
+            if($row['signature'] == 1){
+                $_SESSION['ERROR'] = "Impossible de modifier un horaire signé";
+                header("Location: index.php");
+            }
             $dateHoraire = new DateTime($row['dateHoraire']);
             $dateHoraireOriginal = new DateTime($row['dateHoraire']);
             $heureDebut = new DateTime($row['heureDebut']);

@@ -8,6 +8,7 @@ if(!isset($_SESSION["selectInForm"])){
 if(!isset($_SESSION["imported"])){
     importDatabase();
     $_SESSION["imported"] = true;
+    header("location: index.php");
 }
 
 ?>
@@ -145,11 +146,9 @@ if(!isset($_SESSION["imported"])){
                         </form>
                     </td>";
                     }
-                    echo "</tr>";
-                    
+                    echo "</tr>";           
                 }
             ?>
-            
         </tbody>
     </table>
     <?php
