@@ -4,6 +4,7 @@ include 'config.php';
 if(!isset($_SESSION["selectInForm"])){
     $_SESSION["selectInForm"] = 3;
 }
+
 importDatabase();
 
 ?>
