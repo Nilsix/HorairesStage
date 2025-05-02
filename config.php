@@ -10,7 +10,7 @@
             
             function exportDatabase(){
                 shell_exec("C:\\xampp\\mysql\\bin\\mysqldump.exe -u root horairesstage > horairesstage.sql"); 
-                shell_exec("git add .");
+                shell_exec("git add -A");
                 shell_exec("git commit -m 'autosave'");
                 shell_exec("git push");
             }
