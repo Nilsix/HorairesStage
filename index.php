@@ -5,11 +5,7 @@ if(!isset($_SESSION["selectInForm"])){
     $_SESSION["selectInForm"] = 3;
 }
 
-if(!isset($_SESSION["imported"])){
-    importDatabase();
-    $_SESSION["imported"] = true;
-    header("location: index.php");
-}
+importDatabase();
 
 ?>
 
